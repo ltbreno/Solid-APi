@@ -16,12 +16,12 @@ describe('Authenticate Use Case', () => {
   it('Should be able to register', async () => {
     await usersRepository.create({
       name: 'John Doe',
-      email: 'johndoe@example.com',
+      email: 'johndoe9@example.com',
       password_hash: await hash('123456', 6),
     })
 
     const { user } = await sut.execute({
-      email: 'Johndoe5@gmail.com',
+      email: 'Johndoe9@gmail.com',
       password: '123456',
     })
 
@@ -30,7 +30,7 @@ describe('Authenticate Use Case', () => {
 })
 
 it('Should be able to authenticate with worng email', async () => {
-  expect(() =>
+  await expect(() =>
     sut.execute({
       email: 'Johndoe5@gmail.com',
       password: '123456',
@@ -45,7 +45,7 @@ it('Should be able to authenticate with worng password', async () => {
     password_hash: await hash('123456', 6),
   })
 
-  expect(() =>
+  await expect(() =>
     sut.execute({
       email: 'Johndoe5@gmail.com',
       password: '123123',
